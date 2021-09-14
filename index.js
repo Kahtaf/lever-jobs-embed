@@ -74,6 +74,15 @@ window.loadLeverJobs = function (options) {
         var departmentsanitizeAttribute = sanitizeAttribute(department);
         var link = posting.hostedUrl+leverParameter;
 
+        // Filter by hardcoded filters (location)
+        var isIncludedLocation = jQuery.inArray(posting.categories.location, options.locations) >= 0;
+        if (!isIncludedLocation) continue;
+        
+        // Filter by hardcoded filters (team and specific job title)
+        var isIncludedTeam = jQuery.inArray(team, options.teams) >= 0;
+        var isIncludedJob = jQuery.inArray(posting.text, options.jobTitles) >= 0;
+        if (!isIncludedTeam && !isIncludedJob) continue;
+        
         function findDepartment(element) {
           return element.department == departmentsanitizeAttribute;
         }
